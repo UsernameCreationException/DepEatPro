@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/restaurant_ll"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restaurantname_tv"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:text="nome"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restaurantaddress_tv"
+            android:text="indirizzo"
+            android:layout_below="@id/restaurantname_tv"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@id/restaurant_ll"
+        android:layout_marginHorizontal="15dp"
+        android:id="@+id/line_fl">
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/products_rv"
+        android:layout_below="@+id/line_fl"
+        android:layout_above="@+id/riepilogo_cv"
+        android:layout_marginHorizontal="10dp">
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/standard_115"
+        android:layout_above="@+id/checkout_btn"
+        card_view:cardElevation="8dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardBackgroundColor="@color/colorPrimary"
+        card_view:contentPadding="4dp"
+        android:id="@+id/riepilogo_cv">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="10dp"
+            android:background="@color/defaultColor">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_text"
+                android:layout_marginLeft="10dp"
+                android:layout_above="@+id/minimum_pb"
+                android:id="@+id/totaltext_tv"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_above="@+id/minimum_pb"
+                android:layout_toRightOf="@+id/totaltext_tv"
+                android:id="@+id/total_tv"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/minimum_text"
+                android:layout_above="@+id/minimum_pb"
+                android:layout_toLeftOf="@+id/minimumorder_tv"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_above="@+id/minimum_pb"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/minimumorder_tv"
+                android:layout_marginRight="5dp"/>
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/minimum_pb"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/checkout_btn"
+        android:text="@string/checkout_text"/>
+
+</RelativeLayout>

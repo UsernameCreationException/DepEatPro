@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">DepEat</string>
+
+    <string name="email_hint">Inserisci Email</string>
+    <string name="password_hint">Inserisci Password</string>
+    <string name="confirmpwd_hint">Conferma Password</string>
+    <string name="phonenumber_hint">Inserisci Numero di Telefono</string>
+
+    <string name="login_button">LOGIN</string>
+    <string name="register_button">REGISTRATI</string>
+    <string name="payment_button">PAGA</string>
+
+    <string name="register_text">Registrazione</string>
+    <string name="login_text">Accedi</string>
+    <string name="checkout_text">Checkout</string>
+    <string name="shop_text">Shop</string>
+    <string name="profile_text">Profilo</string>
+    <string name="visual_text">Visuale</string>
+    <string name="total_text">Totale:</string>
+    <string name="minimum_text">Spesa Minima:</string>
+    <string name="zero_text">0</string>
+
+
+    <string name="emailformat_error">Formato Email Invalido</string>
+    <string name="passwordlength_error">La password deve contenere almeno 7 caratteri</string>
+    <string name="passwordequals_error">Le due password non coincidono</string>
+    <string name="phonelength_error">Il numero deve avere 10 cifre più prefisso</string>
+    <string name="phoneformat_error">Formato numero telefonico invalido</string>
+    <string name="login_error">Email o password errata</string>
+    <string name="order_label">Riepilogo Ordine</string>
+
+    <string name="remove_title">Are you sure?</string>
+    <string name="be_careful">Be careful</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">cancel</string>
+
+</resources>
