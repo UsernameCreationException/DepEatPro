@@ -1,5 +1,8 @@
 package com.elis.DepEat.datamodels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Products {
 
     private String nome;
@@ -11,6 +14,12 @@ public class Products {
         this.costo = costo;
         this.quantita = quantita;
     }
+
+    public Products(JSONObject jsonRestaurant) throws JSONException {
+        nome = jsonRestaurant.getString("name");
+        costo = Float.valueOf(jsonRestaurant.getString("price"));
+    }
+
 
     public String getNome() {
         return nome;

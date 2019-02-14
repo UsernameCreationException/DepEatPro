@@ -93,6 +93,7 @@ public class restaurantAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShopActivity.class);
+                    intent.putExtra("id", data.get(getAdapterPosition()).getId());
                     context.startActivity(intent);
                 }
             });

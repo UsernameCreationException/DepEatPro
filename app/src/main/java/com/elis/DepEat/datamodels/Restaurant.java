@@ -1,5 +1,7 @@
 package com.elis.DepEat.datamodels;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,6 +36,7 @@ public class Restaurant implements Serializable {
         indirizzo = jsonRestaurant.getString("address");
         minimo = Float.valueOf(jsonRestaurant.getString("min_order"));
         imageUrl = jsonRestaurant.getString("image_url");
+        id = jsonRestaurant.getString("id");
 
     }
 
@@ -75,6 +78,14 @@ public class Restaurant implements Serializable {
 
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     private ArrayList<Products> getData(){

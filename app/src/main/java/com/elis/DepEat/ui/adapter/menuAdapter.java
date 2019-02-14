@@ -11,22 +11,36 @@ import android.widget.TextView;
 
 import com.elis.DepEat.R;
 import com.elis.DepEat.datamodels.Products;
+import com.elis.DepEat.datamodels.Restaurant;
 
 import java.util.ArrayList;
 
 public class menuAdapter extends RecyclerView.Adapter {
 
     private LayoutInflater inflater;
+    private Restaurant restaurant;
     private ArrayList<Products> data;
     private Context context;
     private ProductsViewHolder vh;
 
 
-    public menuAdapter(Context context, ArrayList<Products> prodotti) {
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+
+    public menuAdapter(Context context, ArrayList<Products> prodotti, Restaurant restaurant) {
         this.inflater = LayoutInflater.from(context);
         this.data = prodotti;
         this.context = context;
+        this.restaurant = restaurant;
     }
+
+
 
     public interface OnQuantityChangedListener {
         void onChange(float price);
@@ -65,6 +79,12 @@ public class menuAdapter extends RecyclerView.Adapter {
         return data.size();
     }
 
+    public void setData(ArrayList<Products> data, Restaurant restaurant){
+        this.data = data;
+        this.restaurant = restaurant;
+        notifyDataSetChanged();
+    }
+
     public class ProductsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView productsTv;
@@ -76,6 +96,7 @@ public class menuAdapter extends RecyclerView.Adapter {
 
         public ProductsViewHolder(@NonNull View itemView) {
             super(itemView);
+
 
             productsTv = itemView.findViewById(R.id.products_tv);
             productCostTv = itemView.findViewById(R.id.productcost_tv);

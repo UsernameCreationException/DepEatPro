@@ -20,13 +20,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/restaurantname_tv"
             android:layout_centerInParent="true"
-            android:layout_alignParentTop="true"
-            android:text="nome"/>
+            android:layout_alignParentTop="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/restaurantaddress_tv"
-            android:text="indirizzo"
             android:layout_below="@id/restaurantname_tv"
             android:layout_centerInParent="true"
             />
