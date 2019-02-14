@@ -12,6 +12,9 @@ public class Restaurant implements Serializable {
     private float minimo;
     private String indirizzo;
     private ArrayList<Products> productsArrayList;
+    private String id;
+
+    public static final String ENDPOINT = "restaurants";
 
     public Restaurant(String nome, float minimo, String imageUrl) {
         this.nome = nome;
