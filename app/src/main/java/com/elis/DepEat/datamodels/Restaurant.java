@@ -1,5 +1,8 @@
 package com.elis.DepEat.datamodels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -21,6 +24,14 @@ public class Restaurant implements Serializable {
         this.nome = nome;
         this.indirizzo = indirizzo;
         this.minimo = minimo;
+    }
+
+    public Restaurant(JSONObject jsonRestaurant) throws JSONException {
+        nome = jsonRestaurant.getString("name");
+        indirizzo = jsonRestaurant.getString("address");
+        minimo = Float.valueOf(jsonRestaurant.getString("min_order"));
+        imageUrl = jsonRestaurant.getString("image_url");
+
     }
 
     public String getNome() {

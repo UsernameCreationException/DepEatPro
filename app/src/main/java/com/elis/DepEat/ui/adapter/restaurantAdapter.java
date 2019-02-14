@@ -62,6 +62,12 @@ public class restaurantAdapter extends RecyclerView.Adapter {
         return data.size();
     }
 
+
+    public void setData(ArrayList<Restaurant> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     public class RestaurantViewHolder extends RecyclerView.ViewHolder{
 
         public TextView restaurantNameTv;

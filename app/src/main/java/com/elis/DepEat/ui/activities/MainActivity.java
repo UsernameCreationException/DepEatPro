@@ -1,5 +1,6 @@
 package com.elis.DepEat.ui.activities;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -10,15 +11,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.elis.DepEat.R;
 import com.elis.DepEat.backend.SharedPreferencesSettings;
 import com.elis.DepEat.datamodels.Restaurant;
 import com.elis.DepEat.ui.adapter.restaurantAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -31,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FloatingActionButton cartBtn;
     RecyclerView.LayoutManager layoutManager;
     restaurantAdapter adapter;
-    ArrayList<Restaurant> arrayList;
+    ArrayList<Restaurant> arrayList = new ArrayList<>();
 
     private boolean layoutController = false;
     private boolean isFABOpen;
@@ -40,15 +52,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://5ba19290ee710f0014dd764c.mockapi.io/api/v1/restaurant";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest=new StringRequest(
+                Request.Method.GET,//HTTP request method
+                url,// Server link
+                new Response.Listener<String>() {//Listener for successful response
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("addio",response);
+                        try {
+                            JSONArray restaurantjsonArray=new JSONObject(response).getJSONArray("data");
+                            arrayList=new ArrayList<>();
+                            for(int i=0; i<restaurantjsonArray.length();i++){
+
+                                Restaurant restaurant=new Restaurant(restaurantjsonArray.getJSONObject(i));
+                                arrayList.add(restaurant);
+                            }
+                            adapter.setData(arrayList);
+                            checkLayout();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {//Listener for unsuccess rensponse
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("addio","non ciao");
+                    }
+                }
+        );
+        queue.add(stringRequest);
+
+
         mainCL = findViewById(R.id.main_content);
         restaurantRv = findViewById(R.id.places_rw);
         changeVisualBtn = findViewById(R.id.changevisual_btn);
         userBtn = findViewById(R.id.user_btn);
         cartBtn = findViewById(R.id.checkout_btn);
-        adapter = new restaurantAdapter(this, getData());
-        checkLayout();
+        adapter = new restaurantAdapter(MainActivity.this, arrayList);
+        //checkLayout();
         restaurantRv.setAdapter(adapter);
-
         changeVisualBtn.setOnClickListener(this);
         userBtn.setOnClickListener(this);
         cartBtn.setOnClickListener(this);
