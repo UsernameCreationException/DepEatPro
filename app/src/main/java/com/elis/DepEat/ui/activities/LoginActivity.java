@@ -6,15 +6,26 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.elis.DepEat.R;
 import com.elis.DepEat.backend.SharedPreferencesSettings;
+import com.elis.DepEat.services.RestController;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher, Response.Listener<String>, Response.ErrorListener {
 
     private EditText emailEt;
     private EditText passwordEt;
@@ -23,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button registerBtn;
 
     boolean hasAccount = false;
+
+    private final String LOGIN_END_POINT = "auth/local";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,26 +62,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void doLogin(){
-        if(checkUser()){
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } else {
-            errorMsgTv.setText(R.string.login_error);
-            errorMsgTv.setVisibility(View.VISIBLE);
-        }
-    }
 
-    private boolean checkUser(){
-        if(SharedPreferencesSettings.getStringFromPreferences(this,emailEt.getText().toString()) != null){
-
-            if(SharedPreferencesSettings.getStringFromPreferences(this,emailEt.getText().toString()).equals(passwordEt.getText().toString()))
-                return true;
-            else
-                return false;
-        } else
-            return false;
+            RestController restController = new RestController(this);
+            restController.postRequest(LOGIN_END_POINT, this, this, getParams());
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -96,5 +95,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        errorMsgTv.setText(R.string.login_error);
+        errorMsgTv.setVisibility(View.VISIBLE);
+        Toast.makeText(this,
+                "Impossibile effettuare l'accesso", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(String response) {
+        try {
+            SharedPreferencesSettings.setSharedPreferences(this,"jwt", new JSONObject(response).getString("jwt"));
+        } catch (JSONException e) {
+            Log.e("jwtError","Errore nel salvataggio del jwt");
+        }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        Toast.makeText(this,
+                "Login effettuato con successo", Toast.LENGTH_LONG).show();
+    }
+
+    protected Map<String, String> getParams()
+    {
+        Map<String, String> params = new HashMap<>();
+        params.put("identifier", emailEt.getText().toString());
+        params.put("password", passwordEt.getText().toString());
+
+        return params;
     }
 }

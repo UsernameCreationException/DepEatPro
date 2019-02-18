@@ -6,18 +6,28 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.elis.DepEat.R;
 import com.elis.DepEat.backend.SharedPreferencesSettings;
 import com.elis.DepEat.backend.Utils;
+import com.elis.DepEat.services.RestController;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<String>, Response.ErrorListener  {
 
     private EditText emailEt;
     private EditText passwordEt;
@@ -26,8 +36,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private TextView errorMsgTv;
     private Button registerBtn;
 
-    private final static Pattern EMAILPAT = Pattern.compile("[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}");   //Era possibile farlo con il pattern di android: android.pattern.etc
-    private final static Pattern PHONEPAT = Pattern.compile("^[+][0-9]{1,4}[\\s]{1}[/0-9]*$");
+    private final String REGISTER_END_POINT = "auth/local/register";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -149,9 +158,38 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, LoginActivity.class);
-        SharedPreferencesSettings.setSharedPreferences(this, emailEt.getText().toString(),passwordEt.getText().toString());
+        /*SharedPreferencesSettings.setSharedPreferences(this, emailEt.getText().toString(),passwordEt.getText().toString());
         SharedPreferencesSettings.setSharedPreferences(this, emailEt.getText().toString()+"phone",phoneNumberEt.getText().toString());
-        SharedPreferencesSettings.setSharedPreferences(this, "Account", true);
+        SharedPreferencesSettings.setSharedPreferences(this, "Account", true);*/
+        RestController restController = new RestController(this);
+        restController.postRequest(REGISTER_END_POINT, this, this, getParams() );
         startActivity(intent);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(this,
+                "Errore nella registrazione", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResponse(String response) {
+        try {
+            SharedPreferencesSettings.setSharedPreferences(this,"jwt", new JSONObject(response).getString("jwt"));
+        } catch (JSONException e) {
+            Log.e("jwtError","Errore nel salvataggio del jwt");
+        }
+        Toast.makeText(this,
+                "Registrazione effettuata con successo", Toast.LENGTH_LONG).show();
+    }
+
+    protected Map<String, String> getParams()
+    {
+        Map<String, String> params = new HashMap<>();
+        params.put("username", phoneNumberEt.getText().toString());
+        params.put("email", emailEt.getText().toString());
+        params.put("password", passwordEt.getText().toString());
+
+        return params;
     }
 }

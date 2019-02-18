@@ -33,6 +33,9 @@
 
         <activity android:name=".ui.activities.CheckoutActivity"
             android:label="@string/checkout_text"></activity>
+
+        <activity android:name=".ui.activities.AccountActivity"
+            android:label="@string/profile_text"></activity>
     </application>
 
 </manifest>

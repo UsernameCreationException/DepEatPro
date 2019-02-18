@@ -7,4 +7,5 @@
     <color name="colorError">#740202</color>
     <color name="darknessView">#80000000</color>
     <color name="defaultColor">#FFFFFF</color>
+    <color name="separatorColor">#AFAFAF</color>
 </resources>

@@ -151,8 +151,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         } else if(v.getId() == R.id.user_btn){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            if(SharedPreferencesSettings.getStringFromPreferences(this,"jwt") != null){
+                Intent intent = new Intent(this, AccountActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
+
         } else if(v.getId() == R.id.checkout_btn){
             Intent intent = new Intent(this, CheckoutActivity.class);
             startActivity(intent);

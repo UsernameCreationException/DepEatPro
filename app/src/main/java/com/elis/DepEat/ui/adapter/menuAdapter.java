@@ -79,11 +79,6 @@ public class menuAdapter extends RecyclerView.Adapter {
         return data.size();
     }
 
-    public void setData(ArrayList<Products> data, Restaurant restaurant){
-        this.data = data;
-        this.restaurant = restaurant;
-        notifyDataSetChanged();
-    }
 
     public class ProductsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

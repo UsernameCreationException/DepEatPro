@@ -1,6 +1,7 @@
 package com.elis.DepEat.backend;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 public class SharedPreferencesSettings {
 
@@ -37,6 +38,7 @@ public class SharedPreferencesSettings {
         sharedPreferences = context.getSharedPreferences(PACKAGE_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(key, false);
     }
+
 }
 
 

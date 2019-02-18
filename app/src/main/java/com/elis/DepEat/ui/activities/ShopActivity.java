@@ -3,6 +3,7 @@ package com.elis.DepEat.ui.activities;
 import android.animation.ObjectAnimator;
 import android.content.ContentProviderOperation;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +56,6 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
         setContentView(R.layout.activity_shop);
 
         idRestaurant = getIntent().getStringExtra("id");
-        Log.d("ciaociao",idRestaurant);
         productsRv = findViewById(R.id.products_rv);
         totalTv = findViewById(R.id.total_tv);
         minimumTv = findViewById(R.id.minimumorder_tv);
@@ -82,7 +82,7 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
     }
 
     private void updateTotal(float item){
-        total= total + item;
+        total = total + item;
         totalTv.setText(String.valueOf(total));
     }
 
@@ -90,6 +90,7 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
     public void onChange(float price) {
         updateTotal(price);
         startAnimation(total*100); //update della progress bar
+
     }
 
     private void startAnimation(float progress){
