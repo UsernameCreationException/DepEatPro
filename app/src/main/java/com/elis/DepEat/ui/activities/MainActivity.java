@@ -1,7 +1,9 @@
 package com.elis.DepEat.ui.activities;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,11 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -46,8 +50,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isFABOpen;
     private final int LOGIN_REQUEST_CODE = 2001;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -66,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         restController = new RestController(this);
         restController.getRequest(Restaurant.ENDPOINT, this, this );
+
+
     }
 
     @Override
@@ -111,28 +121,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         restaurantRv.setLayoutManager(layoutManager);
     }
 
-    private ArrayList<Restaurant> getData(){
-        arrayList = new ArrayList<>();
-        Restaurant MC = new Restaurant("McDonald's",13, "https://d701vexhkz032.cloudfront.net/bundles/front/media/images/favicons/favicon-512.png");
-        Restaurant KFC = new Restaurant("KFC", 9, "https://upload.wikimedia.org/wikipedia/it/thumb/5/57/300px-KFC_logo_svg.png/200px-300px-KFC_logo_svg.png");
-        Restaurant burger = new Restaurant("Burger King", 15, "https://upload.wikimedia.org/wikipedia/it/thumb/3/3a/Burger_King_Logo.svg/1013px-Burger_King_Logo.svg.png");
-        Restaurant roadHouse = new Restaurant("Road House", 25, "https://www.gigroup.it/wp-content/uploads/2018/06/logo-3-300x168.jpg");
-        Restaurant oldWW = new Restaurant("Old Wild West", 12, "https://www.datocms-assets.com/1988/1493821522-o-jpg?w=700&h=700&pad=50&fit=fillmax&bg=%23f5f8ff");
-        Restaurant cMonta = new Restaurant("100Montadidos",5, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoVsjLoPHRpOBGu3Vxg1bhIumeAndqyTCGG5uVZ84AJIkSGbi03A");
-        Restaurant sakura = new Restaurant("SakuraSushi", 15, "https://media-cdn.tripadvisor.com/media/photo-s/04/84/07/36/sakura-sushi.jpg");
-        Restaurant fAndC = new Restaurant("Fish&Chips", 10, "https://image.freepik.com/free-vector/badge-fish-chips-resturant_23-2147507311.jpg");
-
-        arrayList.add(MC);
-        arrayList.add(KFC);
-        arrayList.add(burger);
-        arrayList.add(roadHouse);
-        arrayList.add(oldWW);
-        arrayList.add(cMonta);
-        arrayList.add(sakura);
-        arrayList.add(fAndC);
-
-        return arrayList;
-    }
 
     @Override
     public void onClick(View v) {
@@ -142,14 +130,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showFABMenu();
                 v.animate().rotation(90).setDuration(100);
                 changeVisualBtn.setImageResource(R.drawable.ic_close_black_24dp);
-                //mainCL.setBackgroundColor(getResources().getColor(R.color.darknessView));
-                //adapter.getVh().cardView.setCardBackgroundColor(getResources().getColor(R.color.darknessView));
             }else{
                 closeFABMenu();
                 changeVisualBtn.setImageResource(R.drawable.ic_touch_app_black_24dp);
                 v.animate().rotation(0).setDuration(100);
-                //mainCL.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                //adapter.getVh().cardView.setCardBackgroundColor(getResources().getColor(R.color.defaultColor));
 
             }
         } else if(v.getId() == R.id.user_btn){

@@ -19,6 +19,7 @@ import com.elis.DepEat.R;
 import com.elis.DepEat.backend.SharedPreferencesSettings;
 import com.elis.DepEat.services.RestController;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -118,7 +119,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onResponse(String response) {
         try {
+            JSONObject user = new JSONObject(response).getJSONObject("user");
             SharedPreferencesSettings.setSharedPreferences(this,"jwt", new JSONObject(response).getString("jwt"));
+            SharedPreferencesSettings.setSharedPreferences(this,"email", user.getString("email"));
+            SharedPreferencesSettings.setSharedPreferences(this,"phoneNumber", user.getString("username"));
         } catch (JSONException e) {
             Log.e("jwtError","Errore nel salvataggio del jwt");
         }

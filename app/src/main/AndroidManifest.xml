@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".ui.activities.MainActivity">
+        <activity android:name=".ui.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>  <!-- fa capire quale è la main activity-->
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="android.intent.category.LAUNCHER"></category>
@@ -21,21 +23,26 @@
         </activity>
 
         <activity android:name=".ui.activities.RegistrationActivity"
-            android:label="@string/register_text"></activity>
+            android:label="@string/register_text"
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name=".ui.activities.LoginActivity"
-            android:label="@string/login_text">
+            android:label="@string/login_text"
+            android:screenOrientation="portrait">
 
         </activity>
 
         <activity android:name=".ui.activities.ShopActivity"
-            android:label="@string/shop_text"></activity>
+            android:label="@string/shop_text"
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name=".ui.activities.CheckoutActivity"
-            android:label="@string/checkout_text"></activity>
+            android:label="@string/checkout_text"
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name=".ui.activities.AccountActivity"
-            android:label="@string/profile_text"></activity>
+            android:label="@string/profile_text"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

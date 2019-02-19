@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:id="@+id/email_tv"
             android:gravity="center"
-            android:text="EMAIL"/>
+            android:textSize="20dp"/>
     </LinearLayout>
 
     <FrameLayout
@@ -63,7 +63,7 @@
             android:layout_height="match_parent"
             android:id="@+id/phonenumber_tv"
             android:gravity="center"
-            android:text="23434234234"/>
+            android:textSize="20dp"/>
     </LinearLayout>
 
     <FrameLayout

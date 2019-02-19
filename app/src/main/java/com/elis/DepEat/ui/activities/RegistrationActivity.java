@@ -159,9 +159,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        /*SharedPreferencesSettings.setSharedPreferences(this, emailEt.getText().toString(),passwordEt.getText().toString());
-        SharedPreferencesSettings.setSharedPreferences(this, emailEt.getText().toString()+"phone",phoneNumberEt.getText().toString());
-        SharedPreferencesSettings.setSharedPreferences(this, "Account", true);*/
+        SharedPreferencesSettings.setSharedPreferences(this, "email", emailEt.getText().toString());
+        SharedPreferencesSettings.setSharedPreferences(this,"phoneNumber", phoneNumberEt.getText().toString());
         RestController restController = new RestController(this);
         restController.postRequest(REGISTER_END_POINT, this, this, getParams() );
 
