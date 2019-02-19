@@ -8,26 +8,22 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/restaurant_ll"
-        android:padding="20dp">
+        android:gravity="center">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/restaurantname_tv"
             android:layout_centerInParent="true"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:textSize="20sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/restaurantaddress_tv"
             android:layout_below="@id/restaurantname_tv"
             android:layout_centerInParent="true"
-            />
+            android:textSize="20sp" />
 
     </RelativeLayout>
     <FrameLayout

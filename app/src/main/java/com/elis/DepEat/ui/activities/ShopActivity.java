@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,12 +15,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
 import com.elis.DepEat.R;
 import com.elis.DepEat.backend.SharedPreferencesSettings;
 import com.elis.DepEat.datamodels.Products;
@@ -37,6 +41,8 @@ import java.util.ArrayList;
 public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQuantityChangedListener, Response.Listener<String>, Response.ErrorListener {
 
     private static final int LOGIN_REQUEST_CODE = 2001;
+
+    ImageView restaurantImageIv;
     RecyclerView productsRv;
     TextView restaurantNameTv;
     TextView restaurantAddressTv;
@@ -59,6 +65,8 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
         setContentView(R.layout.activity_shop);
 
         idRestaurant = getIntent().getStringExtra("id");
+
+        restaurantImageIv = findViewById(R.id.restaurantimage_iv);
         productsRv = findViewById(R.id.products_rv);
         totalTv = findViewById(R.id.total_tv);
         minimumTv = findViewById(R.id.minimumorder_tv);
@@ -147,7 +155,7 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
             adapter = new menuAdapter(this, arrayList, restaurant);
             adapter.setOnQuantityChangedListener(this);
             productsRv.setAdapter(adapter);
-            progressBar.setMax((int)adapter.getRestaurant().getMinimo()*100);
+            progressBar.setMax((int)(restaurant.getMinimo()*100));
             minimumTv.setText(String.valueOf(adapter.getRestaurant().getMinimo()));
             layoutManager = new LinearLayoutManager(this);
             productsRv.setLayoutManager(layoutManager);

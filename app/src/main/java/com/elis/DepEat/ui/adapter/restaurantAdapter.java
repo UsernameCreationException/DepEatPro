@@ -51,7 +51,7 @@ public class restaurantAdapter extends RecyclerView.Adapter {
         vh = (RestaurantViewHolder) viewHolder;
         vh.setRestaurant(data.get(i));
         vh.restaurantNameTv.setText(data.get(i).getNome());
-        vh.minimumOrderTv.setText("Spesa Minima: "+String.valueOf(data.get(i).getMinimo()));
+        vh.minimumOrderTv.setText("Spesa Minima: ".concat(String.valueOf(data.get(i).getMinimo())));
         Glide.with(context).load(data.get(i).getImageUrl()).into(vh.restaurantImage);
         vh.itemLayout.setOrientation(orientation);
 

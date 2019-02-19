@@ -18,13 +18,6 @@ public class Restaurant implements Serializable {
 
     public static final String ENDPOINT = "restaurants";
 
-    public Restaurant(String nome, float minimo, String imageUrl) {
-        this.nome = nome;
-        this.minimo = minimo;
-        this.imageUrl = imageUrl;
-        this.productsArrayList = getData();
-    }
-
     public Restaurant(String nome, String indirizzo, int minimo){
         this.nome = nome;
         this.indirizzo = indirizzo;
