@@ -1,6 +1,7 @@
 package com.elis.DepEat.ui.activities;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.ContentProviderOperation;
 import android.content.Intent;
 import android.graphics.Color;
@@ -99,14 +100,15 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
     public void onChange(float price) {
         updateTotal(price);
         startAnimation(total*100); //update della progress bar
-
+        //TODO miglioramento progress bar
     }
 
     private void startAnimation(float progress){
-        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.getProgress(), (int)progress);
+        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar,"progress", progressBar.getProgress(), (int)progress);
         progressAnimator.setDuration(1000);
         progressAnimator.setInterpolator(new LinearInterpolator());
         progressAnimator.start();
+        progressBar.invalidate();
     }
 
     @Override

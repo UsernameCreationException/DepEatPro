@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean layoutController = false;
     private boolean isFABOpen;
+    private final int LOGIN_REQUEST_CODE = 2001;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,10 +162,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         } else if(v.getId() == R.id.checkout_btn){
+            if(SharedPreferencesSettings.getBooleanFromPreferences(this, "loggedIn")){
+                Intent intent = new Intent(this, CheckoutActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivityForResult(intent, LOGIN_REQUEST_CODE);
+                Toast.makeText(this,
+                        R.string.login_check, Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == LOGIN_REQUEST_CODE && resultCode == RESULT_OK){
             Intent intent = new Intent(this, CheckoutActivity.class);
             startActivity(intent);
         }
-
     }
 
     private void showFABMenu() {
@@ -198,4 +218,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+
 }

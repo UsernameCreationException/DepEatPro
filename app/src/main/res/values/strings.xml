@@ -29,6 +29,7 @@
     <string name="phoneformat_error">Formato numero telefonico invalido</string>
     <string name="login_error">Email o password errata</string>
     <string name="order_label">Riepilogo Ordine</string>
+    <string name="login_check">Devi effettuare il login per accedere alla schermata di checkout</string>
 
     <string name="remove_title">Are you sure?</string>
     <string name="be_careful">Be careful</string>

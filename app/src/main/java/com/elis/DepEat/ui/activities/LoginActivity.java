@@ -114,10 +114,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.e("jwtError","Errore nel salvataggio del jwt");
         }
         SharedPreferencesSettings.setSharedPreferences(LoginActivity.this, "loggedIn", true);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         Toast.makeText(this,
                 "Login effettuato con successo", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     protected Map<String, String> getParams()
