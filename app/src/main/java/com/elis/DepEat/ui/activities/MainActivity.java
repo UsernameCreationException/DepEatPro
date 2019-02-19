@@ -1,5 +1,6 @@
 package com.elis.DepEat.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -33,6 +35,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+
+import static android.view.View.GONE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<String>, Response.ErrorListener{
 
@@ -71,6 +75,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         changeVisualBtn.setOnClickListener(this);
         userBtn.setOnClickListener(this);
         cartBtn.setOnClickListener(this);
+
+
+        restaurantRv.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0){
+                    userBtn.hide();
+                    cartBtn.hide();
+                    changeVisualBtn.hide();
+                } else if (dy < 0) {
+                    userBtn.show();
+                    cartBtn.show();
+                    changeVisualBtn.show();
+                }
+            }
+        });
 
         restController = new RestController(this);
         restController.getRequest(Restaurant.ENDPOINT, this, this );
@@ -127,14 +147,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(v.getId() == R.id.changevisual_btn){
             if(!isFABOpen){
-                showFABMenu();
-                v.animate().rotation(90).setDuration(100);
-                changeVisualBtn.setImageResource(R.drawable.ic_close_black_24dp);
+                showFABMenu((FloatingActionButton) v);
             }else{
-                closeFABMenu();
-                changeVisualBtn.setImageResource(R.drawable.ic_touch_app_black_24dp);
-                v.animate().rotation(0).setDuration(100);
-
+                closeFABMenu((FloatingActionButton)v);
             }
         } else if(v.getId() == R.id.user_btn){
             if(SharedPreferencesSettings.getBooleanFromPreferences(this,"loggedIn")){
@@ -170,17 +185,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void showFABMenu() {
+    private void showFABMenu(FloatingActionButton v) {
         isFABOpen=true;
+        v.setImageResource(R.drawable.ic_touch_app_black_24dp);
         userBtn.animate().translationY(-getResources().getDimension(R.dimen.standard_65)).setDuration(120);
         cartBtn.animate().translationY(-getResources().getDimension(R.dimen.standard_115)).setDuration(180);
+        v.animate().rotation(90).setDuration(100);
+        v.setImageResource(R.drawable.ic_close_black_24dp);
 
     }
 
-    private void closeFABMenu(){
+    private void closeFABMenu(FloatingActionButton v){
         isFABOpen=false;
+        v.setImageResource(R.drawable.ic_close_black_24dp);
         userBtn.animate().translationY(0).setDuration(120);
         cartBtn.animate().translationY(0).setDuration(180);
+        v.setImageResource(R.drawable.ic_touch_app_black_24dp);
+        v.animate().rotation(0).setDuration(100);
     }
 
     @Override
