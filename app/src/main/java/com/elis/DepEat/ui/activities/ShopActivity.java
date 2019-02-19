@@ -84,6 +84,15 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
     private void updateTotal(float item){
         total = total + item;
         totalTv.setText(String.valueOf(total));
+        checkoutBtnCheck();
+    }
+
+    private void checkoutBtnCheck() {
+        if(total < Float.valueOf(minimumTv.getText().toString())){
+            checkoutBtn.setEnabled(false);
+        } else{
+            checkoutBtn.setEnabled(true);
+        }
     }
 
     @Override

@@ -112,6 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/checkout_btn"
-        android:text="@string/checkout_text"/>
+        android:text="@string/checkout_text"
+        android:enabled="false"/>
 
 </RelativeLayout>
