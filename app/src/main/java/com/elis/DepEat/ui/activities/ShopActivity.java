@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.elis.DepEat.R;
+import com.elis.DepEat.backend.SharedPreferencesSettings;
 import com.elis.DepEat.datamodels.Products;
 import com.elis.DepEat.services.RestController;
 import com.elis.DepEat.ui.adapter.menuAdapter;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 
 public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQuantityChangedListener, Response.Listener<String>, Response.ErrorListener {
 
+    private static final int LOGIN_REQUEST_CODE = 2001;
     RecyclerView productsRv;
     TextView restaurantNameTv;
     TextView restaurantAddressTv;
@@ -68,8 +70,16 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ShopActivity.this,CheckoutActivity.class));
-            }
+                if(SharedPreferencesSettings.getBooleanFromPreferences(ShopActivity.this, "loggedIn")){
+                    Intent intent = new Intent(ShopActivity.this, CheckoutActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(ShopActivity.this, LoginActivity.class);
+                    startActivityForResult(intent, LOGIN_REQUEST_CODE);
+                    Toast.makeText(ShopActivity.this,
+                            R.string.login_check, Toast.LENGTH_LONG).show();
+                }
+                   }
         });
 
         restController = new RestController(this);
@@ -77,10 +87,15 @@ public class ShopActivity extends AppCompatActivity implements menuAdapter.OnQua
 
     }
 
-    private Restaurant getRestaurant() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        return new Restaurant("Nome Ristorante",12, " ");
+        if(requestCode == LOGIN_REQUEST_CODE && resultCode == RESULT_OK){
+            Intent intent = new Intent(this, CheckoutActivity.class);
+            startActivity(intent);
+        }
     }
+
 
     private void updateTotal(float item){
         total = total + item;

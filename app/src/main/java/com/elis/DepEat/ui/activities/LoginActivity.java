@@ -22,6 +22,7 @@ import com.elis.DepEat.services.RestController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(this, RegistrationActivity.class);
             intent.putExtra("email", emailEt.getText().toString());
             startActivity(intent);
+            finish();
         }
 
     }
@@ -99,11 +101,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        errorMsgTv.setText(R.string.login_error);
-        errorMsgTv.setVisibility(View.VISIBLE);
+        JSONObject object = null;
+        try {
+            String body =new String(error.networkResponse.data, "UTF-8");
+            object = new JSONObject(body);
+            Toast.makeText(this,
+                    object.getString("message"), Toast.LENGTH_LONG).show();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         SharedPreferencesSettings.setSharedPreferences(LoginActivity.this, "loggedIn", false);
-        Toast.makeText(this,
-                "Impossibile effettuare l'accesso", Toast.LENGTH_LONG).show();
     }
 
     @Override

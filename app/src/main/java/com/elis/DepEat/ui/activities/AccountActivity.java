@@ -27,8 +27,9 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferencesSettings.setSharedPreferences(AccountActivity.this,"loggedIn",false);
                 SharedPreferencesSettings.setSharedPreferences(AccountActivity.this, "jwt", "");
-                Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
+                Intent intent = new Intent(AccountActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

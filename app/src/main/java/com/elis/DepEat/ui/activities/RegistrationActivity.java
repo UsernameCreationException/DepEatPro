@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.ClientError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.elis.DepEat.R;
@@ -23,6 +24,7 @@ import com.elis.DepEat.services.RestController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -157,19 +159,27 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, LoginActivity.class);
         /*SharedPreferencesSettings.setSharedPreferences(this, emailEt.getText().toString(),passwordEt.getText().toString());
         SharedPreferencesSettings.setSharedPreferences(this, emailEt.getText().toString()+"phone",phoneNumberEt.getText().toString());
         SharedPreferencesSettings.setSharedPreferences(this, "Account", true);*/
         RestController restController = new RestController(this);
         restController.postRequest(REGISTER_END_POINT, this, this, getParams() );
-        startActivity(intent);
+
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this,
-                "Errore nella registrazione", Toast.LENGTH_LONG).show();
+        JSONObject object = null;
+        try {
+            String body =new String(error.networkResponse.data, "UTF-8");
+            object = new JSONObject(body);
+            Toast.makeText(this,
+                    object.getString("message"), Toast.LENGTH_LONG).show();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -181,6 +191,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         }
         Toast.makeText(this,
                 "Registrazione effettuata con successo", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     protected Map<String, String> getParams()
