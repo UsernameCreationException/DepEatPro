@@ -101,6 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onErrorResponse(VolleyError error) {
         errorMsgTv.setText(R.string.login_error);
         errorMsgTv.setVisibility(View.VISIBLE);
+        SharedPreferencesSettings.setSharedPreferences(LoginActivity.this, "loggedIn", false);
         Toast.makeText(this,
                 "Impossibile effettuare l'accesso", Toast.LENGTH_LONG).show();
     }
@@ -112,6 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (JSONException e) {
             Log.e("jwtError","Errore nel salvataggio del jwt");
         }
+        SharedPreferencesSettings.setSharedPreferences(LoginActivity.this, "loggedIn", true);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         Toast.makeText(this,

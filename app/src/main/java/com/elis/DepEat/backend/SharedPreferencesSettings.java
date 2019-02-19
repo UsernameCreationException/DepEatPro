@@ -39,6 +39,7 @@ public class SharedPreferencesSettings {
         return sharedPreferences.getBoolean(key, false);
     }
 
+
 }
 
 

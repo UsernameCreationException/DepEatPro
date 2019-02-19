@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         } else if(v.getId() == R.id.user_btn){
-            if(SharedPreferencesSettings.getStringFromPreferences(this,"jwt") != null){
+            if(SharedPreferencesSettings.getBooleanFromPreferences(this,"loggedIn")){
                 Intent intent = new Intent(this, AccountActivity.class);
                 startActivity(intent);
             } else {

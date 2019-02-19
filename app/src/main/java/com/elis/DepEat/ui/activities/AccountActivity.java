@@ -26,6 +26,8 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO rimuovere il jwt per il logout
+                SharedPreferencesSettings.setSharedPreferences(AccountActivity.this,"loggedIn",false);
+                SharedPreferencesSettings.setSharedPreferences(AccountActivity.this, "jwt", "");
                 Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
