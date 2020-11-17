@@ -3,7 +3,7 @@ package com.elis.DepEat.backend;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class SharedPreferencesSettings {
+public class SharedPreferencesSettings {      // commento
 
     private static android.content.SharedPreferences sharedPreferences;
     private static android.content.SharedPreferences.Editor editor;
